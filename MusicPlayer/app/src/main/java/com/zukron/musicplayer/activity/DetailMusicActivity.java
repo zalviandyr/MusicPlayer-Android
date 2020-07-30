@@ -117,9 +117,9 @@ public class DetailMusicActivity extends AppCompatActivity implements MusicAdapt
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
                 if (playWhenReady) {
-                    setButtonPlay();
-                } else {
                     setButtonPause();
+                } else {
+                    setButtonPlay();
                 }
 
                 if (playbackState == Player.STATE_READY) {
