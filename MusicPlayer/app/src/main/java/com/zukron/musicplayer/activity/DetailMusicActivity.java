@@ -111,38 +111,17 @@ public class DetailMusicActivity extends AppCompatActivity implements MusicAdapt
 
         // prepare playlist
         preparePlaylist();
-    }
-
-    private void setRecyclerView() {
-        ArrayList<Music> musics = new ArrayList<>();
-
-        assert listFileMusic != null;
-        for (File value : listFileMusic) {
-            Music music = new Music();
-            music.setTitle(value.getName());
-            music.setPath(value.getPath());
-
-            musics.add(music);
-        }
-
-        MusicAdapter musicAdapter = new MusicAdapter(this, musics);
-        musicAdapter.setOnSelected(this);
-        rvDetail.setAdapter(musicAdapter);
-    }
-
-    @Override
-    public void onSelectedItem(int position) {
-        tvTitlePlayingDetail.setText(listFileMusic.get(position).getName());
-        setButtonPause();
-
-        // play music with index
-        simpleExoPlayer.seekTo(position, C.TIME_UNSET);
-        simpleExoPlayer.setPlayWhenReady(true);
 
         // set duration, current duration and seek bar
         simpleExoPlayer.addListener(new Player.DefaultEventListener() {
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                if (playWhenReady) {
+                    setButtonPlay();
+                } else {
+                    setButtonPause();
+                }
+
                 if (playbackState == Player.STATE_READY) {
                     long duration = simpleExoPlayer.getDuration();
                     tvDurationDetail.setText(convertTime(duration));
@@ -181,16 +160,41 @@ public class DetailMusicActivity extends AppCompatActivity implements MusicAdapt
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                setButtonPlay();
                 simpleExoPlayer.setPlayWhenReady(false);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                setButtonPause();
                 simpleExoPlayer.setPlayWhenReady(true);
             }
         });
+    }
+
+    private void setRecyclerView() {
+        ArrayList<Music> musics = new ArrayList<>();
+
+        assert listFileMusic != null;
+        for (File value : listFileMusic) {
+            Music music = new Music();
+            music.setTitle(value.getName());
+            music.setPath(value.getPath());
+
+            musics.add(music);
+        }
+
+        MusicAdapter musicAdapter = new MusicAdapter(this, musics);
+        musicAdapter.setOnSelected(this);
+        rvDetail.setAdapter(musicAdapter);
+    }
+
+    @Override
+    public void onSelectedItem(int position) {
+        tvTitlePlayingDetail.setText(listFileMusic.get(position).getName());
+        setButtonPause();
+
+        // play music with index
+        simpleExoPlayer.seekTo(position, C.TIME_UNSET);
+        simpleExoPlayer.setPlayWhenReady(true);
     }
 
     @Override
@@ -238,10 +242,8 @@ public class DetailMusicActivity extends AppCompatActivity implements MusicAdapt
             case R.id.btn_play_pause_detail:
                 // pause, jika musik sedang berputar
                 if (simpleExoPlayer.getPlayWhenReady()) {
-                    setButtonPlay();
                     simpleExoPlayer.setPlayWhenReady(false);
                 } else {
-                    setButtonPause();
                     simpleExoPlayer.setPlayWhenReady(true);
                 }
                 break;
