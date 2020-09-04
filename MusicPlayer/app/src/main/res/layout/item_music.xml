@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mcv_item_music"
+    android:id="@+id/material_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="10dp"
@@ -25,14 +25,14 @@
             app:strokeWidth="1dp">
 
             <ImageView
-                android:id="@+id/iv_icon_item_music"
+                android:id="@+id/iv_icon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/pngwing" />
+                android:src="@drawable/ic_song" />
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            android:id="@+id/tv_title_item_music"
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/_mcv"
